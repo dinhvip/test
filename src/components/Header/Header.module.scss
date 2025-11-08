@@ -1,0 +1,188 @@
+@use '../../styles/global.scss' as *;
+
+.header {
+    background: #414141;
+    padding: 0.5rem 10rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.container {
+    max-width: 1920px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+}
+
+.logo {
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: #FF963C;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.nav {
+    display: flex;
+    gap: 3.5rem;
+    align-items: center;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1rem;
+    transition: color 0.2s;
+    position: relative;
+}
+
+.navLink:hover {
+    color: #FF963C;
+}
+
+.activeLink {
+    color: #FF963C;
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+.iconWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #EA6C00;
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 600;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #414141;
+}
+
+.menuButton {
+    background: transparent;
+    border: none;
+    color: #FF963C;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+}
+
+.menuButton:hover {
+    opacity: 0.8;
+}
+
+/* Drawer Menu Styles */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1100;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    z-index: 1200;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    background-color: $color-gray-400;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.closeButton {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    color: #FF963C;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+}
+
+.closeButton:hover {
+    opacity: 0.8;
+}
+
+.drawerNav {
+    display: flex;
+    flex-direction: column;
+    padding-top: 4rem;
+}
+
+.drawerLink {
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 1.5rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 300;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s;
+}
+
+.drawerLink:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.drawerLink:last-child {
+    border-bottom: none;
+}
