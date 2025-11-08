@@ -4,6 +4,7 @@ import { useChartData } from "../../hooks/chart/useChartData.js";
 import { formatCurrency } from "../../components/charts/LineChart/chartHelpers.js";
 import LineChart from "../../components/charts/LineChart/LineChart.js";
 import ColumnsGrid, { type Column } from "./ColumnsGrid";
+import ExerciseLog from "../../components/ExerciseLog/ExerciseLog.js";
 
 const RecordPage: React.FC = () => {
     const [columns, setColumns] = useState<Column[]>([]);
@@ -103,7 +104,7 @@ const RecordPage: React.FC = () => {
                     error={errorChart}
                 />
             </div>
-
+            <ExerciseLog />
         </div>
     );
 };
