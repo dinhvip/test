@@ -1,0 +1,1 @@
+const content = "Hello World";

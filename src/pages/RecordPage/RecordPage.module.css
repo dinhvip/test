@@ -1,0 +1,110 @@
+.container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.info {
+    padding: 1.5rem;
+}
+
+.date {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: #e6f3ff;
+    color: #0066cc;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.cardTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.description {
+    color: #666;
+    line-height: 1.5;
+}
+
+.loadingContainer,
+.errorContainer,
+.emptyContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    text-align: center;
+}
+
+.loadingSpinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.errorMessage {
+    color: #dc3545;
+    font-size: 1.1rem;
+}
