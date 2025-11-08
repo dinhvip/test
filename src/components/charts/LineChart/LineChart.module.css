@@ -1,6 +1,6 @@
 .lineChart {
     position: relative;
-    background: var(--color-surface, #ffffff);
+    background: var(--color-surface, #414141);
     border-radius: var(--radius-lg, 0.5rem);
     padding: var(--spacing-4, 1rem);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
