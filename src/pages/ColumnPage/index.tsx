@@ -1,100 +1,89 @@
 import LineChart from '../../components/charts/LineChart/LineChart';
+import RecommendedColumn from '../../components/RecommendedColumn';
+import ArticleCard from '../../components/ArticleCard';
 import { useChartData } from '../../hooks/chart/useChartData';
-import FeatureCard from '../../components/FeatureCard';
+import styles from './ColumnPage.module.scss';
 
 export default function ColumnPage() {
   // Multiple charts với mock data
   const revenue = useChartData('/api/charts/revenue', { period: 'monthly' });
-  const orders = useChartData('/api/charts/orders', { period: 'week' });
-  const hourly = useChartData('/api/charts/hourly-orders', { date: '2025-11-08' });
-  const customers = useChartData('/api/charts/customers', { year: 2025 });
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          Dashboard Thống Kê
-        </h1>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Revenue Chart */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <LineChart
-              labels={revenue.data.labels}
-              datasets={revenue.data.datasets}
-              height="350px"
-              title="Doanh thu & Lợi nhuận"
-              loading={revenue.loadingChart}
-              error={revenue.errorChart}
-            />
-          </div>
-
-          {/* Orders Chart */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <LineChart
-              labels={orders.data.labels}
-              datasets={orders.data.datasets}
-              height="350px"
-              title="Đơn hàng theo tuần"
-              loading={orders.loadingChart}
-              error={orders.errorChart}
-            />
-          </div>
-
-          {/* Hourly Orders Chart */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <LineChart
-              labels={hourly.data.labels}
-              datasets={hourly.data.datasets}
-              height="300px"
-              title="Đơn hàng theo giờ"
-              loading={hourly.loadingChart}
-              error={hourly.errorChart}
-            />
-          </div>
-
-          {/* Customers Chart */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <LineChart
-              labels={customers.data.labels}
-              datasets={customers.data.datasets}
-              height="300px"
-              title="Khách hàng mới & Quay lại"
-              loading={customers.loadingChart}
-              error={customers.errorChart}
-            />
-          </div>
+    <div className={styles.page}>
+      <div className={styles.container}>
+        {/* 4 Recommended Cards */}
+        <div className={styles.cardsContainer}>
+          <RecommendedColumn category="COLUMN" subtitle="オススメ" />
+          <RecommendedColumn category="DIET" subtitle="ダイエット" />
+          <RecommendedColumn category="BEAUTY" subtitle="美容" />
+          <RecommendedColumn category="HEALTH" subtitle="健康" />
         </div>
 
-        {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-          <FeatureCard
-            title="Tổng doanh thu"
-            description="680,000,000 đ"
-            buttonText="+12.5%"
-            gradient="purple"
-            onButtonClick={() => console.log('Revenue details clicked')}
+        {/* Articles Grid */}
+        <div className={styles.articlesGrid}>
+          <ArticleCard
+            image="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400&h=300&fit=crop"
+            date="2021.05.17"
+            time="23:25"
+            title="魚を食べて頭も力ラダも元気に！知っておきたい魚を食べるメリ..."
+            description="魚には良質なタンパク質やDHA、EPAなどの栄養素が豊富に含まれています。"
+            tags={["魚料理", "和食", "DHA"]}
           />
-          <FeatureCard
-            title="Tổng đơn hàng"
-            description="18,850 đơn"
-            buttonText="+8.3%"
-            gradient="blue"
-            onButtonClick={() => console.log('Orders details clicked')}
+          <ArticleCard
+            image="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=300&fit=crop"
+            date="2021.05.17"
+            time="23:25"
+            title="ダイエット中でも安心！ヘルシーなおやつの選び方"
+            description="カロリーを抑えながら満足感を得られるおやつの選び方をご紹介します。"
+            tags={["ダイエット", "おやつ", "健康"]}
           />
-          <FeatureCard
-            title="Giá trị TB/Đơn"
-            description="36,070 đ"
-            buttonText="-2.1%"
-            gradient="green"
-            onButtonClick={() => console.log('Average order details clicked')}
+          <ArticleCard
+            image="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop"
+            date="2021.05.17"
+            time="23:25"
+            title="野菜たっぷり！栄養バランスの良い食事のコツ"
+            description="毎日の食事に野菜を取り入れて、健康的な生活を送りましょう。"
+            tags={["野菜", "栄養", "健康"]}
           />
-          <FeatureCard
-            title="Khách hàng mới"
-            description="1,245 khách"
-            buttonText="+15.7%"
-            gradient="purple"
-            onButtonClick={() => console.log('Customers details clicked')}
+          <ArticleCard
+            image="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400&h=300&fit=crop"
+            date="2021.05.17"
+            time="23:25"
+            title="朝食の重要性と簡単に作れる朝ごはんレシピ"
+            description="忙しい朝でも簡単に作れる栄養満点の朝食レシピをご紹介します。"
+            tags={["朝食", "レシピ", "時短"]}
+          />
+          <ArticleCard
+            image="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop"
+            date="2021.05.17"
+            time="23:25"
+            title="美肌効果抜群！ビタミンCたっぷりの食材"
+            description="ビタミンCが豊富な食材を取り入れて、内側から美しくなりましょう。"
+            tags={["美容", "ビタミンC", "美肌"]}
+          />
+          <ArticleCard
+            image="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?w=400&h=300&fit=crop"
+            date="2021.05.17"
+            time="23:25"
+            title="運動後の栄養補給に最適な食事とは"
+            description="運動後の体に必要な栄養素を効率よく摂取する方法を解説します。"
+            tags={["運動", "栄養", "筋肉"]}
+          />
+          <ArticleCard
+            image="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop"
+            date="2021.05.17"
+            time="23:25"
+            title="腸内環境を整える発酵食品の効果"
+            description="発酵食品を取り入れて、腸内環境を改善し健康的な体を作りましょう。"
+            tags={["発酵食品", "腸活", "健康"]}
+          />
+          <ArticleCard
+            image="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=400&h=300&fit=crop"
+            date="2021.05.17"
+            time="23:25"
+            title="季節の食材を使った簡単レシピ集"
+            description="旬の食材を使って、栄養価の高い美味しい料理を作りましょう。"
+            tags={["レシピ", "旬", "料理"]}
           />
         </div>
       </div>

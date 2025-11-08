@@ -36,28 +36,20 @@ const MainLayout: React.FC<PropsWithChildren<MainLayoutProps>> = ({
   headerProps = {},
   footerProps = {}
 }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
-    // Set initial states
-    handleScroll();
+    // Set initial state
     handleResize();
 
-    // Add event listeners
-    window.addEventListener('scroll', handleScroll);
+    // Add event listener
     window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
@@ -102,7 +94,6 @@ const MainLayout: React.FC<PropsWithChildren<MainLayoutProps>> = ({
 
   const layoutClasses = [
     styles.layout,
-    isScrolled ? styles.scrolled : '',
     isMobile ? styles.mobile : '',
     sidebar ? styles.withSidebar : '',
     getMaxWidthClass(),
@@ -114,7 +105,7 @@ const MainLayout: React.FC<PropsWithChildren<MainLayoutProps>> = ({
       {showHeader && (
         <Header 
           {...headerProps}
-          className={`${headerProps.className || ''} ${isScrolled ? styles.headerScrolled : ''}`}
+          className={headerProps.className || ''}
         />
       )}
       
@@ -130,9 +121,7 @@ const MainLayout: React.FC<PropsWithChildren<MainLayoutProps>> = ({
           role="main"
           aria-label="Main content"
         >
-          <div className={styles.contentWrapper}>
-            {children}
-          </div>
+         {children}
         </main>
       </div>
       

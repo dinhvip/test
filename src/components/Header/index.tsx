@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
+import Logo from '../icon/Logo';
+import Challenge from '../icon/Challenge';
+import Memo from '../icon/Memo';
+import Info from '../icon/Info';
 
 interface HeaderProps {
     className?: string;
@@ -8,13 +12,40 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ className = '' }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const menuContainerRef = useRef<HTMLDivElement>(null);
     const headerClasses = `${styles.header} ${className}`.trim();
+
+    // Close menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuContainerRef.current && !menuContainerRef.current.contains(event.target as Node)) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        // Close menu when scrolling
+        const handleScroll = () => {
+            setIsMenuOpen(false);
+        };
+
+        if (isMenuOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+            document.addEventListener('scroll', handleScroll);
+            window.addEventListener('scroll', handleScroll);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [isMenuOpen]);
     
     return (
         <header className={headerClasses}>
             <div className={styles.container}>
                 <Link to="/" className={styles.logo}>
-                    Healthy
+                    <Logo />
                 </Link>
 
                 <nav className={styles.nav}>
@@ -24,22 +55,16 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
                             `${styles.navLink} ${isActive ? styles.activeLink : ''}`
                         }
                     >
-                        <svg className={styles.icon} width="32" height="32" viewBox="0 0 32 32" fill="none">
-                            <path d="M8 4H24V28H8V4Z" stroke="currentColor" strokeWidth="2"/>
-                            <path d="M12 10H20M12 16H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                        </svg>
+                        <Memo />
                         <span>自分の記録</span>
                     </NavLink>
                     <NavLink
-                        to="/challenges"
+                        to="/columns"
                         className={({ isActive }) =>
                             `${styles.navLink} ${isActive ? styles.activeLink : ''}`
                         }
                     >
-                        <svg className={styles.icon} width="32" height="32" viewBox="0 0 32 32" fill="none">
-                            <circle cx="16" cy="12" r="6" stroke="currentColor" strokeWidth="2"/>
-                            <path d="M16 18C11 18 7 21 7 25H25C25 21 21 18 16 18Z" stroke="currentColor" strokeWidth="2"/>
-                        </svg>
+                       <Challenge />
                         <span>チャレンジ</span>
                     </NavLink>
                     <NavLink
@@ -49,46 +74,32 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
                         }
                     >
                         <div className={styles.iconWrapper}>
-                            <svg className={styles.icon} width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <path d="M8 12C8 8 11 5 16 5C21 5 24 8 24 12V18L26 22H6L8 18V12Z" stroke="currentColor" strokeWidth="2"/>
-                                <path d="M14 26C14 27.1046 14.8954 28 16 28C17.1046 28 18 27.1046 18 26" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                            </svg>
+                            <Info />
                             <span className={styles.badge}>1</span>
                         </div>
                         <span>お知らせ</span>
                     </NavLink>
 
-                    <button 
-                        className={styles.menuButton}
-                        onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        aria-label="Menu"
-                    >
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                            <path d="M6 10H26M6 16H26M6 22H26" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                        </svg>
-                    </button>
-                </nav>
-            </div>
-
-            {/* Slide-out Menu */}
-            {isMenuOpen && (
-                <>
-                    <div 
-                        className={styles.overlay}
-                        onClick={() => setIsMenuOpen(false)}
-                    />
-                    <div className={styles.drawer}>
+                    <div className={styles.menuContainer} ref={menuContainerRef}>
                         <button 
-                            className={styles.closeButton}
-                            onClick={() => setIsMenuOpen(false)}
-                            aria-label="Close menu"
+                            className={styles.menuButton}
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                         >
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <path d="M8 8L24 24M24 8L8 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                            </svg>
+                            {isMenuOpen ? (
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                    <path d="M8 8L24 24M24 8L8 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                                </svg>
+                            ) : (
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                    <path d="M6 10H26M6 16H26M6 22H26" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                                </svg>
+                            )}
                         </button>
 
-                        <nav className={styles.drawerNav}>
+                        {isMenuOpen && (
+                            <div className={styles.drawer}>
+                                <nav className={styles.drawerNav}>
                             <Link 
                                 to="/records" 
                                 className={styles.drawerLink}
@@ -132,9 +143,11 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
                                 設定
                             </Link>
                         </nav>
+                            </div>
+                        )}
                     </div>
-                </>
-            )}
+                </nav>
+            </div>
         </header>
     );
 };

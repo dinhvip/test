@@ -28,7 +28,6 @@
 .contentWrapper {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
   animation: fadeInUp 0.6s ease-out;
 }
 
